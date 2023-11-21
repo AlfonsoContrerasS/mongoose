@@ -14,8 +14,9 @@ export class VentaController {
   }
 
   @Get()
-  findAll() {
-    return this.ventaService.findAll();
+  async listaVentas(): Promise<Venta[]> {
+    const listaVentas = await this.ventaService.findAll();
+    return listaVentas;
   }
 
   @Get(':id')

@@ -36,8 +36,9 @@ export class VentaService {
      
   }
 
-  findAll() {
-    return `This action returns all venta`;
+  async findAll(): Promise<Venta[]> {
+    const listaVentas = await this.ventaModel.find();
+    return listaVentas;
   }
 
   findOne(id: number) {
