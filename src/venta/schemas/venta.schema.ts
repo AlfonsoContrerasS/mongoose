@@ -6,7 +6,7 @@ import { Producto } from "src/producto/schemas/producto.schema";
 export class Venta {
     
     @Prop({name: 'producto', type: ObjectId, ref: 'Producto'})
-    producto: Producto[] | ObjectId[];
+    producto: Producto;
 
     @Prop({name: 'cantidad'})
     cantidad: number;

@@ -5,6 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Venta } from './schemas/venta.schema';
 import { Producto } from 'src/producto/schemas/producto.schema';
+import { VentaDto } from './dto/venta.dto';
+import { mapperVenta } from './mapper/venta.mapper';
 
 @Injectable()
 export class VentaService {
@@ -14,7 +16,7 @@ export class VentaService {
     @InjectModel(Producto.name) private readonly productoModel: Model<Producto>
   ) {}
   
-  async create(createVentaDto: CreateVentaDto): Promise<Venta> {
+  async create(createVentaDto: CreateVentaDto): Promise<VentaDto> {
     try {
       const productoExist = await this.productoModel.exists({_id: createVentaDto.idProducto});
       console.log(productoExist);
@@ -26,13 +28,12 @@ export class VentaService {
     const fecha = new Date();
     venta.fecha = fecha;
     const productoEncontrado = await this.productoModel.findOne({_id: createVentaDto.idProducto})
-    const listaProductos = [];
-    listaProductos.push(productoEncontrado);
-    console.log(listaProductos[0]);
-    venta.producto = listaProductos[0];
-    venta.total = listaProductos[0].precio * createVentaDto.cantidad;
+    
+    venta.producto = productoEncontrado;
+    venta.total = productoEncontrado.precio * createVentaDto.cantidad;
     await this.ventaModel.create(venta);
-    return venta;
+    const resultado = mapperVenta.toDto(venta);
+    return resultado;
      
   }
 
@@ -41,15 +42,17 @@ export class VentaService {
     return listaVentas;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} venta`;
-  }
-
-  update(id: number, updateVentaDto: UpdateVentaDto) {
-    return `This action updates a #${id} venta`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} venta`;
+  reporteVentas(): string {
+    const ventas = this.ventaModel.find();
+    // const reporte = this.ventaModel.aggregate([
+    //   {
+    //     $s: {
+    //       _id: null,
+    //       total: {$sum: "$total"},
+    //       cantidad: {$sum: "$cantidad"}
+    //     }
+    //   }
+    // ])
+    return 'Reporte de ventas';
   }
 }
