@@ -20,5 +20,9 @@ export class VentaController {
     return listaVentas;
   }
 
-
+  @Get('reporte')
+  async reporteVentas(): Promise<any> {
+    const reporteVentas = await this.ventaService.reporteVentas();
+    return reporteVentas;
+  }
 }

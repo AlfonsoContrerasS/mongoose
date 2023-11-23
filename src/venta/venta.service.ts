@@ -39,20 +39,48 @@ export class VentaService {
 
   async findAll(): Promise<Venta[]> {
     const listaVentas = await this.ventaModel.find();
+    
     return listaVentas;
   }
 
-  reporteVentas(): string {
-    const ventas = this.ventaModel.find();
-    // const reporte = this.ventaModel.aggregate([
-    //   {
-    //     $s: {
-    //       _id: null,
-    //       total: {$sum: "$total"},
-    //       cantidad: {$sum: "$cantidad"}
-    //     }
-    //   }
-    // ])
-    return 'Reporte de ventas';
+  async reporteVentas(): Promise<any> {
+    const ventas = await this.ventaModel.find();
+
+    var firstDayMonth = new Date();
+    firstDayMonth.setDate(1);
+    firstDayMonth.setHours(0, 0, 0, 0);
+
+    var lastDayMonth = new Date();
+    lastDayMonth.setMonth(lastDayMonth.getMonth() + 1, 0);
+    lastDayMonth.setHours(0, 0, 0, 0);
+    console.log(firstDayMonth," ",lastDayMonth);
+
+    const reporte = await this.ventaModel.aggregate([
+      {
+        $match: {
+          "fecha": {
+            $gte: firstDayMonth,
+            $lt: lastDayMonth
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: "producto",
+          localField: "producto",
+          foreignField: "_id",
+          as: "product",
+        },
+      },
+      {
+        $group: {
+          _id: "$product.categoria",
+          totalVentas: {
+            $sum: "$total",
+          },
+        },
+      },
+    ])
+    return reporte;
   }
 }
