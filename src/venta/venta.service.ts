@@ -46,11 +46,11 @@ export class VentaService {
   async reporteVentas(): Promise<any> {
     const ventas = await this.ventaModel.find();
 
-    var firstDayMonth = new Date();
+    const firstDayMonth = new Date();
     firstDayMonth.setDate(1);
     firstDayMonth.setHours(0, 0, 0, 0);
 
-    var lastDayMonth = new Date();
+    const lastDayMonth = new Date();
     lastDayMonth.setMonth(lastDayMonth.getMonth() + 1, 0);
     lastDayMonth.setHours(0, 0, 0, 0);
     console.log(firstDayMonth," ",lastDayMonth);
@@ -69,17 +69,17 @@ export class VentaService {
           from: "producto",
           localField: "producto",
           foreignField: "_id",
-          as: "product",
-        },
+          as: "product"
+        }
       },
       {
         $group: {
           _id: "$product.categoria",
           totalVentas: {
-            $sum: "$total",
-          },
-        },
-      },
+            $sum: "$total"
+          }
+        }
+      }
     ])
     return reporte;
   }
