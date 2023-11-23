@@ -1,0 +1,71 @@
+db.producto.insertMany([{
+  nombre: "camisa",
+  categoria: "ropa",
+  precio: 50},
+  {nombre: "poleron",
+   categoria: "ropa",
+   precio: 20},
+  {nombre: "pantalon",
+  categoria: "ropa",
+  precio: 30},
+  {nombre: "zapatillas",
+  categoria: "calzado",
+  precio: 100},
+  {nombre: "zapatos",
+  categoria: "calzado",
+  precio: 80},
+  {nombre: "chalas",
+  categoria: "calzado",
+  precio: 10},
+  {nombre: "gorro",
+  categoria: "accesorio",
+  precio: 5},
+  {nombre: "cinturon",
+  categoria: "accesorio",
+  precio: 10},
+  {nombre: "bufanda",
+  categoria: "accesorio",
+  precio: 15}])
+
+  db.venta.insertMany([{
+producto: "_idProducto1",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"},
+{producto: "_idProducto2",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"}
+,{producto: "_idProducto3",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"},
+{
+producto: "_idProducto4",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"},
+{producto: "_idProducto5",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"}
+,{producto: "_idProducto6",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"},
+{
+producto: "_idProducto7",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"},
+{producto: "_idProducto8",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"}
+,{producto: "_idProducto9",
+cantidad: 2,
+total: 100,
+fecha: "2023-11-23 01:17:59"}
+])
+
+// es más facil crearlos en el swagger, dto listos para crear así!!!
